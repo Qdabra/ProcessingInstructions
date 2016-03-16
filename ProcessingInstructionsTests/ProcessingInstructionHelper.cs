@@ -30,7 +30,7 @@ namespace Qdabra.Utility.Tests
             const string houses = "Gryffindor, Hufflepuff, Slytherin, Ravenclaw";
             const string pets = "Hedwig, Harry's owl, Scabbers, Ron's rat, Crookshanks, Hermione's cat";
 
-            var pi = PRH.BuildProcessingInstruction(new Dictionary<string, string>
+            var pi = PRH.BuildProcessingInstructionValue(new Dictionary<string, string>
             {
                 {"houses", houses},
                 {"pets", pets}
