@@ -87,3 +87,30 @@ namespace Qdabra.Utility
         }
     }
 }
+
+namespace Qdabra.Utility.Extensions.ProcessingInstructions
+{
+    public static class ProcessingInstructions
+    {
+        /// <summary>
+        /// Extracts the pseudo-attributes in the specified processing instruction
+        /// </summary>
+        /// <param name="processingInstruction">A processing instruction formatted to contain pseudo-attributes</param>
+        /// <returns>A dictionary from the attributes' names to their respective values</returns>
+        public static IDictionary<string, string> GetPseudoAttributes(this XProcessingInstruction processingInstruction)
+        {
+            return PIHelper.GetPseudoAttributes(processingInstruction.Data);
+        }
+
+        /// <summary>
+        /// Locates the first processing instruction with the specified name in the specified parent node.
+        /// </summary>
+        /// <param name="parent">A container node (document node, element, etc.)</param>
+        /// <param name="name">The name of the processing instruction to locate.</param>
+        /// <returns>The located processing instruction, or null if none is found</returns>
+        public static XProcessingInstruction ProcessingInstruction(this XContainer parent, string name)
+        {
+            return PIHelper.GetProcessingInstruction(parent, name);
+        }
+    }
+}

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Qdabra.Utility.Extensions.ProcessingInstructions;
 
 namespace Qdabra.Utility.Tests
 {
     [TestClass]
     public class ProcessingInstructionHelper
     {
-        private XDocument SampleDoc =
+        private readonly XDocument _sampleDoc =
             XDocument.Parse("<?book author=\"J.K. Rowling\" title=\"Harry Potter &amp; the Order of the Phoenix\" genre=\"fiction\"?><book />");
 
         [TestMethod]
@@ -29,15 +30,15 @@ namespace Qdabra.Utility.Tests
             const string houses = "Gryffindor, Hufflepuff, Slytherin, Ravenclaw";
             const string pets = "Hedwig, Harry's owl, Scabbers, Ron's rat, Crookshanks, Hermione's cat";
 
-            var pi = PIHelper.BuildProcessingInstructionValue(new Dictionary<string, string>
+            var piStr = PIHelper.BuildProcessingInstructionValue(new Dictionary<string, string>
             {
                 {"houses", houses},
                 {"pets", pets}
             });
 
-            Assert.IsFalse(Regex.IsMatch(pi, @"^\s.*|\.*\s$"), "Value has leading or trailing whitespace");
+            Assert.IsFalse(Regex.IsMatch(piStr, @"^\s.*|\.*\s$"), "Value has leading or trailing whitespace");
 
-            var attrs = PIHelper.GetPseudoAttributes(pi);
+            var attrs = PIHelper.GetPseudoAttributes(piStr);
 
             Assert.AreEqual(attrs.Count, 2);
             Assert.AreEqual(attrs["houses"], houses);
@@ -47,13 +48,13 @@ namespace Qdabra.Utility.Tests
         [TestMethod]
         public void GetProcessingInstruction()
         {
-            var pi = PIHelper.GetProcessingInstruction(SampleDoc, "book");
-            var attrs = PIHelper.GetPseudoAttributes(pi);
+            var pi = _sampleDoc.ProcessingInstruction("book");
+            var attrs = pi.GetPseudoAttributes();
 
             Assert.AreEqual(attrs.Count, 3);
             Assert.AreEqual(attrs["title"], "Harry Potter & the Order of the Phoenix");
 
-            var pi2 = PIHelper.GetProcessingInstruction(SampleDoc, "title");
+            var pi2 = _sampleDoc.ProcessingInstruction("title");
             
             Assert.IsNull(pi2);
         }
