@@ -9,7 +9,7 @@ namespace Qdabra.Utility
     /// <summary>
     /// Utilities for working with XML processing instructions
     /// </summary>
-    public static class ProcessingInstructionHelper
+    public static class PIHelper
     {
         /// <summary>
         /// Extracts the pseudo-attributes in the specified value
@@ -67,7 +67,7 @@ namespace Qdabra.Utility
             var el = new XElement("n", values.Select(kv => TryMakeAttribute(kv.Key, kv.Value)));
             var elXml = el.ToString();
 
-            return Regex.Replace(elXml, @"^<n|\s*(></n|/)>$", "");
+            return Regex.Replace(elXml, @"^<n\s*|\s*(></n|/)>$", "");
         }
 
         /// <summary>
