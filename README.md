@@ -50,9 +50,9 @@ Returns the first processing instruction child of `parent` with name `name`, or 
 IDictionary<string, string> GetPseudoAttributes(this XProcessingInstruction processingInstruction)
 ```
 
-<hr />
-
 Convenience method for `PIHelper.GetPseudoAttributes()`
+
+<hr />
 
 ```c#
 XProcessingInstruction ProcessingInstruction(this XContainer parent, string name)
